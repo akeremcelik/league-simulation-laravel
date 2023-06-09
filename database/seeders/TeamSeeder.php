@@ -13,7 +13,7 @@ class TeamSeeder extends Seeder
      *
      * @return void
      */
-    public function run(StoreTeam $storeTeam)
+    public function run()
     {
         $teams = [
             [
@@ -35,7 +35,8 @@ class TeamSeeder extends Seeder
         ];
 
         foreach ($teams as $team) {
-            $storeTeam->handle($team['name'], $team['strength']);
+            $storeTeam = new StoreTeam($team['name'], $team['strength']);
+            $storeTeam->handle();
         }
     }
 }
