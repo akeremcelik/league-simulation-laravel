@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Actions\CreateNewTeam;
+use App\Actions\StoreTeam;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +13,7 @@ class TeamSeeder extends Seeder
      *
      * @return void
      */
-    public function run(CreateNewTeam $createNewTeam)
+    public function run(StoreTeam $storeTeam)
     {
         $teams = [
             [
@@ -35,7 +35,7 @@ class TeamSeeder extends Seeder
         ];
 
         foreach ($teams as $team) {
-            $createNewTeam->handle($team);
+            $storeTeam->handle($team['name'], $team['strength']);
         }
     }
 }

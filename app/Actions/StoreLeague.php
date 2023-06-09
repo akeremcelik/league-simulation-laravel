@@ -4,7 +4,7 @@ namespace App\Actions;
 
 use App\Models\League;
 
-class CreateNewLeague
+class StoreLeague
 {
     public function handle(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
