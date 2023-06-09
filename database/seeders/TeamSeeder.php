@@ -1,0 +1,41 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Actions\CreateNewTeam;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class TeamSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run(CreateNewTeam $createNewTeam)
+    {
+        $teams = [
+            [
+                'name' => 'Liverpool',
+                'strength' => 70,
+            ],
+            [
+                'name' => 'Manchester City',
+                'strength' => 85,
+            ],
+            [
+                'name' => 'Chelsea',
+                'strength' => 60,
+            ],
+            [
+                'name' => 'Arsenal',
+                'strength' => 35,
+            ],
+        ];
+
+        foreach ($teams as $team) {
+            $createNewTeam->handle($team);
+        }
+    }
+}
