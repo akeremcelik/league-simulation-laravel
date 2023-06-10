@@ -15,8 +15,7 @@ class PlayService
     {
         $matchResult = $this->determineMatchResult($fixture->home_team, $fixture->away_team);
 
-        $updateFixture = new UpdateFixture([
-            'fixture' => $fixture,
+        $updateFixture = new UpdateFixture($fixture, [
             'played' => true,
             'home_team_score' => $matchResult['home_team_score'],
             'away_team_score' => $matchResult['away_team_score'],

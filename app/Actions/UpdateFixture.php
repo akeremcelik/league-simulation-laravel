@@ -6,10 +6,12 @@ use App\Models\Fixture;
 
 class UpdateFixture
 {
+    public Fixture $fixture;
     public array $data;
 
-    public function __construct(array $data)
+    public function __construct(Fixture $fixture, array $data)
     {
+        $this->fixture = $fixture;
         $this->data = $data;
     }
 
@@ -21,9 +23,7 @@ class UpdateFixture
             'away_team_score' => $this->data['away_team_score'],
         ];
 
-        $fixture = $this->data['fixture'];
-        $fixture->update($data);
-
-        return $fixture->fresh();
+        $this->fixture->update($data);
+        return $this->fixture->fresh();
     }
 }
