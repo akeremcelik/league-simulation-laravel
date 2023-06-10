@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\V1\PlayController;
 
 Route::prefix('v1')->group(function () {
     Route::get('teams', [TeamController::class, 'teams']);
-    Route::post('fixture/generate', [FixtureController::class, 'generateFixtures']);
-    Route::post('leagues/{league}/weeks/{week}/play', [PlayController::class, 'playWeek']);
+    Route::post('generate-fixtures', [FixtureController::class, 'generateFixtures']);
+    Route::post('leagues/{league}/play-next-week', [PlayController::class, 'playNextWeek']);
+    Route::post('leagues/{league}/play-all-weeks', [PlayController::class, 'playAllWeeks']);
 });

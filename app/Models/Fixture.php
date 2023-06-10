@@ -37,6 +37,11 @@ class Fixture extends Model
         $query->orderBy('week', 'ASC');
     }
 
+    public function scopePlayedStatus(Builder $query, $status)
+    {
+        $query->where('played', $status);
+    }
+
     public function league(): BelongsTo
     {
         return $this->belongsTo(League::class);

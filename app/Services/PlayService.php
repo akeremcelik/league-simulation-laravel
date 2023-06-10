@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Actions\UpdateFixture;
 use App\Models\Fixture;
-use App\Models\League;
 use App\Models\Team;
 
 class PlayService
@@ -12,20 +11,17 @@ class PlayService
     const MAX_GOAL = 8;
     const DRAW_FACTOR = 0.2;
 
-    public function playWeek(League $league, $week)
+    public function playMatch(Fixture $fixture)
     {
-        $weekFixtures = Fixture::query()->ofLeague($league->id)->ofWeek($week)->get();
-        foreach ($weekFixtures as $weekFixture) {
-            $matchResult = $this->determineMatchResult($weekFixture->home_team, $weekFixture->away_team);
+        $matchResult = $this->determineMatchResult($fixture->home_team, $fixture->away_team);
 
-            $updateFixture = new UpdateFixture([
-                'fixture' => $weekFixture,
-                'played' => true,
-                'home_team_score' => $matchResult['home_team_score'],
-                'away_team_score' => $matchResult['away_team_score'],
-            ]);
-            $updateFixture->handle();
-        }
+        $updateFixture = new UpdateFixture([
+            'fixture' => $fixture,
+            'played' => true,
+            'home_team_score' => $matchResult['home_team_score'],
+            'away_team_score' => $matchResult['away_team_score'],
+        ]);
+        $updateFixture->handle();
     }
 
     public function determineMatchResult(Team $homeTeam, Team $awayTeam)
