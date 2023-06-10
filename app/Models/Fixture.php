@@ -27,6 +27,11 @@ class Fixture extends Model
         $query->where('league_id', $league_id);
     }
 
+    public function scopeOfWeek(Builder $query, $week)
+    {
+        $query->where('week', $week);
+    }
+
     public function scopeWeekAscending(Builder $query)
     {
         $query->orderBy('week', 'ASC');
