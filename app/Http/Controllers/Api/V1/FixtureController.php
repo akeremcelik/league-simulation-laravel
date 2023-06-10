@@ -24,7 +24,7 @@ class FixtureController extends Controller
             $storeFixture->handle();
         }
 
-        $fixtures = Fixture::query()->where('league_id', $league->id)->orderBy('week', 'ASC')->get();
+        $fixtures = Fixture::query()->ofLeague($league->id)->weekAscending()->get();
         return FixtureResource::collection($fixtures);
     }
 }

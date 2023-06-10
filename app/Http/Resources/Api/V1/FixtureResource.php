@@ -19,6 +19,9 @@ class FixtureResource extends JsonResource
             'week' => $this->week,
             'home_team' => TeamResource::make($this->home_team),
             'away_team' => TeamResource::make($this->away_team),
+            'played' => $this->played,
+            'home_team_score' => $this->home_team_score,
+            'away_team_score' => $this->away_team_score,
         ];
     }
 }
