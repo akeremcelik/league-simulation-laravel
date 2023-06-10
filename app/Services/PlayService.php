@@ -18,7 +18,12 @@ class PlayService
         foreach ($weekFixtures as $weekFixture) {
             $matchResult = $this->determineMatchResult($weekFixture->home_team, $weekFixture->away_team);
 
-            $updateFixture = new UpdateFixture($weekFixture, true, $matchResult['home_team_score'], $matchResult['away_team_score']);
+            $updateFixture = new UpdateFixture([
+                'fixture' => $weekFixture,
+                'played' => true,
+                'home_team_score' => $matchResult['home_team_score'],
+                'away_team_score' => $matchResult['away_team_score'],
+            ]);
             $updateFixture->handle();
         }
     }

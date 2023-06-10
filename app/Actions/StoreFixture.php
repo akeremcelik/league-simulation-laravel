@@ -3,35 +3,27 @@
 namespace App\Actions;
 
 use App\Models\Fixture;
-use App\Models\League;
-use App\Models\Team;
 
 class StoreFixture
 {
-    protected League $league;
-    protected int $week;
-    protected Team $homeTeam;
-    protected Team $awayTeam;
+    public array $data;
 
-    public function __construct($league, $week, $homeTeam, $awayTeam)
+    public function __construct(array $data)
     {
-        $this->league = $league;
-        $this->week = $week;
-        $this->homeTeam = $homeTeam;
-        $this->awayTeam = $awayTeam;
+        $this->data = $data;
     }
 
     public function handle(): Fixture
     {
         $data = [
-            'week' => $this->week,
+            'week' => $this->data['week'],
         ];
 
         $fixture = new Fixture($data);
 
-        $fixture->league()->associate($this->league);
-        $fixture->home_team()->associate($this->homeTeam);
-        $fixture->away_team()->associate($this->awayTeam);
+        $fixture->league()->associate($this->data['league']);
+        $fixture->home_team()->associate($this->data['home_team']);
+        $fixture->away_team()->associate($this->data['away_team']);
 
         $fixture->save();
 

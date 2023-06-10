@@ -35,7 +35,7 @@ class TeamSeeder extends Seeder
         ];
 
         foreach ($teams as $team) {
-            $storeTeam = new StoreTeam($team['name'], $team['strength']);
+            $storeTeam = new StoreTeam($team);
             $storeTeam->handle();
         }
     }

@@ -6,29 +6,24 @@ use App\Models\Fixture;
 
 class UpdateFixture
 {
-    protected Fixture $fixture;
-    protected bool $played;
-    protected int $home_team_score;
-    protected int $away_team_score;
+    public array $data;
 
-    public function __construct($fixture, $played, $home_team_score, $away_team_score)
+    public function __construct(array $data)
     {
-        $this->fixture = $fixture;
-        $this->played = $played;
-        $this->home_team_score = $home_team_score;
-        $this->away_team_score = $away_team_score;
+        $this->data = $data;
     }
 
     public function handle(): ?Fixture
     {
         $data = [
-            'played' => $this->played,
-            'home_team_score' => $this->home_team_score,
-            'away_team_score' => $this->away_team_score,
+            'played' => $this->data['played'],
+            'home_team_score' => $this->data['home_team_score'],
+            'away_team_score' => $this->data['away_team_score'],
         ];
 
-        $this->fixture->update($data);
+        $fixture = $this->data['fixture'];
+        $fixture->update($data);
 
-        return $this->fixture->fresh();
+        return $fixture->fresh();
     }
 }

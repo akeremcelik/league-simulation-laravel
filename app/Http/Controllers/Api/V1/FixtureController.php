@@ -22,7 +22,12 @@ class FixtureController extends Controller
         $generatedFixtures = $fixtureService->generateFixtures();
 
         foreach ($generatedFixtures as $generatedFixture) {
-            $storeFixture = new StoreFixture($league, $generatedFixture['week'], $teams[$generatedFixture['home_team_index']], $teams[$generatedFixture['away_team_index']]);
+            $storeFixture = new StoreFixture([
+                'league' => $league,
+                'week' => $generatedFixture['week'],
+                'home_team' => $teams[$generatedFixture['home_team_index']],
+                'away_team' => $teams[$generatedFixture['away_team_index']],
+            ]);
             $storeFixture->handle();
         }
 
