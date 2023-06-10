@@ -42,6 +42,8 @@ class Fixture extends Model
         $query->where('played', $status);
     }
 
+    //
+
     public function league(): BelongsTo
     {
         return $this->belongsTo(League::class);
@@ -55,5 +57,22 @@ class Fixture extends Model
     public function away_team(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'away_team_id');
+    }
+
+    //
+
+    public function result_draw()
+    {
+        return $this->home_team_score === $this->away_team_score;
+    }
+
+    public function result_home_team_winner()
+    {
+        return $this->home_team_score > $this->away_team_score;
+    }
+
+    public function result_away_team_winner()
+    {
+        return $this->home_team_score < $this->away_team_score;
     }
 }

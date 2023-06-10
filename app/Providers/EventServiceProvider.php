@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\MatchPlayed;
+use App\Events\WeekPlayed;
 use App\Listeners\IncreaseLeagueAtWeek;
+use App\Listeners\UpdateTeamScoreboard;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         MatchPlayed::class => [
+            UpdateTeamScoreboard::class,
+        ],
+        WeekPlayed::class => [
             IncreaseLeagueAtWeek::class,
         ],
     ];

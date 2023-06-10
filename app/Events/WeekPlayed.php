@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\Fixture;
+use App\Models\League;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MatchPlayed
+class WeekPlayed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,9 +20,9 @@ class MatchPlayed
      *
      * @return void
      */
-    public function __construct(public Fixture $fixture)
+    public function __construct(public League $league)
     {
-
+        //
     }
 
     /**

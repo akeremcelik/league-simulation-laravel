@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Actions\UpdateLeague;
-use App\Events\MatchPlayed;
+use App\Events\WeekPlayed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -25,7 +25,7 @@ class IncreaseLeagueAtWeek
      * @param  object  $event
      * @return void
      */
-    public function handle(MatchPlayed $event)
+    public function handle(WeekPlayed $event)
     {
         $updateLeague = new UpdateLeague($event->league);
         $updateLeague->handle([

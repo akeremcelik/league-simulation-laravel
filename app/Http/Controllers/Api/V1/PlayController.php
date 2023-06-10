@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Events\MatchPlayed;
+use App\Events\WeekPlayed;
 use App\Http\Controllers\Controller;
 use App\Models\Fixture;
 use App\Models\League;
@@ -18,9 +19,10 @@ class PlayController extends Controller
 
         foreach ($fixtures as $fixture) {
             $playService->playMatch($fixture);
+            MatchPlayed::dispatch($fixture);
         }
 
-        MatchPlayed::dispatch($league);
+        WeekPlayed::dispatch($league);
     }
 
     public function playAllWeeks(Request $request, League $league, PlayService $playService)
@@ -29,6 +31,9 @@ class PlayController extends Controller
 
         foreach ($fixtures as $fixture) {
             $playService->playMatch($fixture);
+            MatchPlayed::dispatch($fixture);
         }
+
+        WeekPlayed::dispatch($league);
     }
 }
