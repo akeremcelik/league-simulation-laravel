@@ -6,20 +6,8 @@ use App\Models\Team;
 
 class StoreTeam
 {
-    public array $data;
-
-    public function __construct(array $data)
+    public function handle(array $data): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
     {
-        $this->data = $data;
-    }
-
-    public function handle(): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
-    {
-        $data = [
-            'name' => $this->data['name'],
-            'strength' => $this->data['strength'],
-        ];
-
         return Team::query()->create($data);
     }
 }

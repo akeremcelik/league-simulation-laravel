@@ -6,24 +6,17 @@ use App\Models\Fixture;
 
 class StoreFixture
 {
-    public array $data;
-
-    public function __construct(array $data)
+    public function handle(array $data): Fixture
     {
-        $this->data = $data;
-    }
-
-    public function handle(): Fixture
-    {
-        $data = [
-            'week' => $this->data['week'],
+        $storeData = [
+            'week' => $data['week'],
         ];
 
-        $fixture = new Fixture($data);
+        $fixture = new Fixture($storeData);
 
-        $fixture->league()->associate($this->data['league']);
-        $fixture->home_team()->associate($this->data['home_team']);
-        $fixture->away_team()->associate($this->data['away_team']);
+        $fixture->league()->associate($data['league']);
+        $fixture->home_team()->associate($data['home_team']);
+        $fixture->away_team()->associate($data['away_team']);
 
         $fixture->save();
 
