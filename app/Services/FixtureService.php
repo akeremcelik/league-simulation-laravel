@@ -18,18 +18,18 @@ class FixtureService
 
         foreach ($teamMatches as $key => $teamMatch) {
             $week = ($key%3)+1;
-            $firstTeamIsHome = (bool) random_int(0, 1);
+            $firstTeamIsHome = random_int(0, 1);
 
             $fixtures[] = [
                 'week' => $week,
-                'home_team_index' => $teamMatch[$firstTeamIsHome ? 0 : 1],
-                'away_team_index' => $teamMatch[$firstTeamIsHome ? 1 : 0],
+                'home_team_index' => $teamMatch[$firstTeamIsHome],
+                'away_team_index' => $teamMatch[!$firstTeamIsHome],
             ];
 
             $fixtures[] = [
                 'week' => $week+3,
-                'home_team_index' => $teamMatch[$firstTeamIsHome ? 1 : 0],
-                'away_team_index' => $teamMatch[$firstTeamIsHome ? 0 : 1],
+                'home_team_index' => $teamMatch[!$firstTeamIsHome],
+                'away_team_index' => $teamMatch[$firstTeamIsHome],
             ];
         }
 
