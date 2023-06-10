@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\TeamController;
+use App\Http\Controllers\Api\V1\FixtureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,5 @@ use App\Http\Controllers\Api\V1\TeamController;
 
 Route::prefix('v1')->group(function () {
     Route::get('teams', [TeamController::class, 'teams']);
+    Route::post('fixture/generate', [FixtureController::class, 'generateFixtures']);
 });
-
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
