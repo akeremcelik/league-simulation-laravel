@@ -13,18 +13,21 @@ use Illuminate\Http\Request;
 
 class FixtureController extends Controller
 {
-    public function generateFixtures(FixtureService $fixtureService)
+    public function generateFixtures()
     {
         $league = (new StoreLeague())->handle();
         $teams = Team::all()->take(4);
 
-        $generatedFixtures = $fixtureService->generateFixtures($teams);
+        $fixtureService = new FixtureService($teams);
+        $generatedFixtures = $fixtureService->generateFixtures();
+
         foreach ($generatedFixtures as $generatedFixture) {
             $storeFixture = new StoreFixture($league, $generatedFixture['week'], $teams[$generatedFixture['home_team_index']], $teams[$generatedFixture['away_team_index']]);
             $storeFixture->handle();
         }
 
         $fixtures = Fixture::query()->ofLeague($league->id)->weekAscending()->get();
+
         return FixtureResource::collection($fixtures);
     }
 }

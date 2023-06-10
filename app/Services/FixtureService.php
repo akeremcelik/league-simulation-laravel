@@ -4,10 +4,17 @@ namespace App\Services;
 
 class FixtureService
 {
-    public function generateFixtures($teams)
+    protected $teams;
+
+    public function __construct($teams)
+    {
+        $this->teams = $teams;
+    }
+
+    public function generateFixtures()
     {
         $fixtures = [];
-        $teamMatches = $this->matchTeams($teams);
+        $teamMatches = $this->matchTeams();
 
         foreach ($teamMatches as $key => $teamMatch) {
             $week = ($key%3)+1;
@@ -29,12 +36,12 @@ class FixtureService
         return $fixtures;
     }
 
-    public function matchTeams($teams)
+    public function matchTeams()
     {
         $teamMatches = [];
 
-        foreach ($teams as $key_1 => $team_1) {
-            foreach ($teams as $key_2 => $team_2) {
+        foreach ($this->teams as $key_1 => $team_1) {
+            foreach ($this->teams as $key_2 => $team_2) {
                 if ($key_1 < $key_2) {
                     $teamMatches[] = [$key_1, $key_2];
                 }
