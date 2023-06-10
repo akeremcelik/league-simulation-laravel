@@ -7,7 +7,7 @@ use App\Events\MatchPlayed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class IncreaseLeagueWeek
+class IncreaseLeagueAtWeek
 {
     /**
      * Create the event listener.
