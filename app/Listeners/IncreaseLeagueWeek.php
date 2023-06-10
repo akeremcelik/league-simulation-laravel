@@ -27,9 +27,9 @@ class IncreaseLeagueWeek
      */
     public function handle(MatchPlayed $event)
     {
-        $updateLeague = new UpdateLeague($event->league, [
+        $updateLeague = new UpdateLeague($event->league);
+        $updateLeague->handle([
             'at_week' => $event->league->at_week+1,
         ]);
-        $updateLeague->handle();
     }
 }
