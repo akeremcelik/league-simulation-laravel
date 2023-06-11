@@ -40,14 +40,23 @@ class FixtureService
     {
         $teamMatches = [];
 
+        $secondPart = false;
+        $secondPartMatches = [];
+
         foreach ($this->teams as $key_1 => $team_1) {
             foreach ($this->teams as $key_2 => $team_2) {
                 if ($key_1 < $key_2) {
-                    $teamMatches[] = [$key_1, $key_2];
+                    if (!$secondPart) {
+                        $teamMatches[] = [$key_1, $key_2];
+                    } else {
+                        $secondPartMatches[] = [$key_1, $key_2];
+                    }
                 }
             }
+
+            if (!$secondPart) $secondPart = true;
         }
 
-        return $teamMatches;
+        return array_merge($teamMatches, array_reverse($secondPartMatches));
     }
 }

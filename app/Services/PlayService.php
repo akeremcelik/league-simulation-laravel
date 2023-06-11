@@ -6,10 +6,13 @@ use App\Actions\UpdateFixture;
 use App\Models\Fixture;
 use App\Models\Team;
 
-class PlayService
+abstract class PlayService
 {
     const MAX_GOAL = 8;
     const DRAW_FACTOR = 0.2;
+
+    public abstract function findFixtures();
+    public abstract function play();
 
     public function playMatch(Fixture $fixture)
     {
