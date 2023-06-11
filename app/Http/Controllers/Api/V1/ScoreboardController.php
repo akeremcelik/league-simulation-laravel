@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 
 class ScoreboardController extends Controller
 {
-    public function getScoreboard(League $league)
+    public function scoreboard(League $league)
     {
-        $scoreboard = (new ScoreboardService($league))->getScoreboard();
+        $scoreboard = (new ScoreboardService($league))->scoreboard();
 
         return ScoreboardResource::collection($scoreboard);
     }

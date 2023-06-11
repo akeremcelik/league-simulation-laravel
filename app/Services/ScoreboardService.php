@@ -13,7 +13,7 @@ class ScoreboardService
         $this->league = $league;
     }
 
-    public function getScoreboard()
+    public function scoreboard()
     {
         return $this->league->teams()->get()->sortByDesc(function ($team) {
             return $team->pivot->points();

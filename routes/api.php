@@ -23,5 +23,5 @@ Route::prefix('v1')->group(function () {
     Route::post('generate-fixtures', [FixtureController::class, 'generateFixtures']);
     Route::post('leagues/{league}/play-next-week', [PlayController::class, 'playNextWeek']);
     Route::post('leagues/{league}/play-all-weeks', [PlayController::class, 'playAllWeeks']);
-    Route::get('leagues/{league}/get-scoreboard', [ScoreboardController::class, 'getScoreboard']);
+    Route::get('leagues/{league}/scoreboard', [ScoreboardController::class, 'scoreboard']);
 });
