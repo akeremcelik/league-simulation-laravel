@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -15,6 +16,20 @@ class LeagueTeam extends Pivot
         'goals_against',
     ];
 
+    //
+
+    public function scopeOfLeague(Builder $query, $league_id)
+    {
+        $query->where('league_id', $league_id);
+    }
+
+    public function scopeOfTeam(Builder $query, $team_id)
+    {
+        $query->where('team_id', $team_id);
+    }
+
+    //
+
     public function league(): BelongsTo
     {
         return $this->belongsTo(League::class);
@@ -24,6 +39,8 @@ class LeagueTeam extends Pivot
     {
         return $this->belongsTo(Team::class);
     }
+
+    //
 
     public function played()
     {

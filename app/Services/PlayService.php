@@ -11,7 +11,6 @@ abstract class PlayService
 {
     const MAX_GOAL = 8;
     const DRAW_FACTOR = 0.2;
-    const MAX_WEEK = 6;
 
     public abstract function play();
 

@@ -18,7 +18,7 @@ class PlayAllWeeks extends PlayService
 
     public function play()
     {
-        while ($this->league->fresh()->at_week < parent::MAX_WEEK) {
+        while ($this->league->fresh()->at_week < 6) {
             foreach ($this->findFixtures($this->league) as $fixture) {
                 $this->playMatch($fixture);
                 MatchPlayed::dispatch($fixture);

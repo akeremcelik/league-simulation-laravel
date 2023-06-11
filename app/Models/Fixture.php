@@ -22,6 +22,8 @@ class Fixture extends Model
         'played' => 'boolean',
     ];
 
+    //
+
     public function scopeOfLeague(Builder $query, $league_id)
     {
         $query->where('league_id', $league_id);

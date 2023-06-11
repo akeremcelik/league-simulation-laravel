@@ -24,7 +24,7 @@ class PlayController extends Controller
             $scoreboardService->championshipPredictions();
         }
 
-        $previousWeekFixtures = Fixture::query()->where('league_id', $league->id)->where('week', $league->at_week)->get()->toArray();
+        $previousWeekFixtures = Fixture::query()->ofLeague($league->id)->ofWeek($league->at_week)->get()->toArray();
 
         return ScoreboardResource::collection($scoreboardService->returnScoreboard())
             ->additional([
@@ -39,7 +39,7 @@ class PlayController extends Controller
         $scoreboardService = new ScoreboardService($league);
         $scoreboardService->scoreboard();
 
-        $previousWeekFixtures = Fixture::query()->where('league_id', $league->id)->where('week', $league->fresh()->at_week)->get()->toArray();
+        $previousWeekFixtures = Fixture::query()->ofLeague($league->id)->ofWeek($league->fresh()->at_week)->get()->toArray();
 
         return ScoreboardResource::collection($scoreboardService->returnScoreboard())
             ->additional([

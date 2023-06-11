@@ -30,8 +30,8 @@ class UpdateTeamScoreboard
     {
         $fixture = $event->fixture;
 
-        $leagueHomeTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->home_team_id)->firstOrFail();
-        $leagueAwayTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->away_team_id)->firstOrFail();
+        $leagueHomeTeam = LeagueTeam::query()->ofLeague($fixture->league_id)->ofTeam($fixture->home_team_id)->firstOrFail();
+        $leagueAwayTeam = LeagueTeam::query()->ofLeague($fixture->league_id)->ofTeam($fixture->away_team_id)->firstOrFail();
 
         $leagueHomeTeamData = [
             'goals_for' => $leagueHomeTeam->goals_for+$fixture->home_team_score,
