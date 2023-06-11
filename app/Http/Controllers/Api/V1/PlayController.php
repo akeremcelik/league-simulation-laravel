@@ -39,7 +39,7 @@ class PlayController extends Controller
         $scoreboardService = new ScoreboardService($league);
         $scoreboardService->scoreboard();
 
-        $previousWeekFixtures = Fixture::query()->ofLeague($league->id)->ofWeek($league->fresh()->at_week)->get()->toArray();
+        $previousWeekFixtures = Fixture::query()->ofLeague($league->id)->get()->toArray();
 
         return ScoreboardResource::collection($scoreboardService->returnScoreboard())
             ->additional([
