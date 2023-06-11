@@ -17,6 +17,7 @@ class ScoreboardResource extends JsonResource
         return [
             'team' => TeamResource::make($this),
             'statistics' => StatisticResource::make($this->pivot),
+            'prediction' => $this->prediction ?? 0,
         ];
     }
 }

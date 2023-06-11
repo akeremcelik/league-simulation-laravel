@@ -15,16 +15,23 @@ class PlayController extends Controller
     public function playNextWeek(Request $request, League $league)
     {
         (new PlayNextWeek($league))->play();
-        $scoreboard = (new ScoreboardService($league))->scoreboard();
+        $scoreboardService = new ScoreboardService($league);
 
-        return ScoreboardResource::collection($scoreboard);
+        $scoreboardService->scoreboard();
+        if ($league->fresh()->at_week >= 3) {
+            $scoreboardService->championshipPredictions();
+        }
+
+        return ScoreboardResource::collection($scoreboardService->returnScoreboard());
     }
 
     public function playAllWeeks(Request $request, League $league)
     {
         (new PlayAllWeeks($league))->play();
-        $scoreboard = (new ScoreboardService($league))->scoreboard();
+        $scoreboardService = new ScoreboardService($league);
 
-        return ScoreboardResource::collection($scoreboard);
+        $scoreboardService->scoreboard();
+
+        return ScoreboardResource::collection($scoreboardService->returnScoreboard());
     }
 }

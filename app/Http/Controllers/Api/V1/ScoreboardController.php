@@ -12,8 +12,9 @@ class ScoreboardController extends Controller
 {
     public function scoreboard(League $league)
     {
-        $scoreboard = (new ScoreboardService($league))->scoreboard();
+        $scoreboardService = new ScoreboardService($league);
+        $scoreboardService->scoreboard();
 
-        return ScoreboardResource::collection($scoreboard);
+        return ScoreboardResource::collection($scoreboardService->returnScoreboard());
     }
 }
