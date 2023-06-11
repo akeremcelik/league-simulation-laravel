@@ -18,11 +18,14 @@ class PlayNextWeek extends PlayService
 
     public function play()
     {
-        foreach ($this->findFixtures($this->league) as $fixture) {
-            $this->playMatch($fixture);
-            MatchPlayed::dispatch($fixture);
-        }
+        $fixtures = $this->findFixtures($this->league);
+        if ($fixtures->count()) {
+            foreach ($fixtures as $fixture) {
+                $this->playMatch($fixture);
+                MatchPlayed::dispatch($fixture);
+            }
 
-        WeekPlayed::dispatch($this->league);
+            WeekPlayed::dispatch($this->league);
+        }
     }
 }

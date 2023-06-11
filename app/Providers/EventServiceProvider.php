@@ -6,6 +6,8 @@ use App\Events\MatchPlayed;
 use App\Events\WeekPlayed;
 use App\Listeners\IncreaseLeagueAtWeek;
 use App\Listeners\UpdateTeamScoreboard;
+use App\Models\League;
+use App\Observers\LeagueObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -28,6 +30,15 @@ class EventServiceProvider extends ServiceProvider
         WeekPlayed::class => [
             IncreaseLeagueAtWeek::class,
         ],
+    ];
+
+    /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        League::class => [LeagueObserver::class],
     ];
 
     /**
