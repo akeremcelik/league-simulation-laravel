@@ -24,4 +24,19 @@ class LeagueTeam extends Pivot
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function played()
+    {
+        return $this->won + $this->drawn + $this->lost;
+    }
+
+    public function goal_difference()
+    {
+        return $this->goals_for - $this->goals_against;
+    }
+
+    public function points()
+    {
+        return ($this->won*3) + ($this->drawn*1);
+    }
 }

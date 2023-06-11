@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Actions\UpdateLeagueTeam;
 use App\Events\MatchPlayed;
 use App\Models\LeagueTeam;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,48 +30,30 @@ class UpdateTeamScoreboard
     {
         $fixture = $event->fixture;
 
+        $leagueHomeTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->home_team_id)->firstOrFail();
+        $leagueAwayTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->away_team_id)->firstOrFail();
+
+        $leagueHomeTeamData = [
+            'goals_for' => $leagueHomeTeam->goals_for+$fixture->home_team_score,
+            'goals_against' => $leagueHomeTeam->goals_against+$fixture->away_team_score,
+        ];
+        $leagueAwayTeamData = [
+            'goals_for' => $leagueAwayTeam->goals_for+$fixture->away_team_score,
+            'goals_against' => $leagueAwayTeam->goals_against+$fixture->home_team_score,
+        ];
+
         if ($fixture->result_draw()) {
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->home_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'drawn' => $leagueTeam->drawn+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->home_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->away_team_score,
-            ]);
-
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->away_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'drawn' => $leagueTeam->drawn+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->away_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->home_team_score,
-            ]);
+            $leagueHomeTeamData['drawn'] = $leagueHomeTeam->drawn+1;
+            $leagueAwayTeamData['drawn'] = $leagueAwayTeam->drawn+1;
         } elseif ($fixture->result_home_team_winner()) {
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->home_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'won' => $leagueTeam->won+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->home_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->away_team_score,
-            ]);
-
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->away_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'lost' => $leagueTeam->lost+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->away_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->home_team_score,
-            ]);
+            $leagueHomeTeamData['won'] = $leagueHomeTeam->won+1;
+            $leagueAwayTeamData['lost'] = $leagueAwayTeam->lost+1;
         } else {
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->home_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'lost' => $leagueTeam->lost+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->home_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->away_team_score,
-            ]);
-
-            $leagueTeam = LeagueTeam::query()->where('league_id', $fixture->league_id)->where('team_id', $fixture->away_team_id)->firstOrFail();
-            $leagueTeam->update([
-                'won' => $leagueTeam->won+1,
-                'goals_for' => $leagueTeam->goals_for+$fixture->away_team_score,
-                'goals_against' => $leagueTeam->goals_against+$fixture->home_team_score,
-            ]);
+            $leagueHomeTeamData['lost'] = $leagueHomeTeam->lost+1;
+            $leagueAwayTeamData['won'] = $leagueAwayTeam->won+1;
         }
+
+        (new UpdateLeagueTeam($leagueHomeTeam))->handle($leagueHomeTeamData);
+        (new UpdateLeagueTeam($leagueAwayTeam))->handle($leagueAwayTeamData);
     }
 }
