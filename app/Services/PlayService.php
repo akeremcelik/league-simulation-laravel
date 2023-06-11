@@ -11,6 +11,7 @@ abstract class PlayService
 {
     const MAX_GOAL = 8;
     const DRAW_FACTOR = 0.2;
+    const HOME_FACTOR = 0.1;
 
     public abstract function play();
 
@@ -35,6 +36,7 @@ abstract class PlayService
     {
         $result = [];
 
+        $homeTeam->strength += ($homeTeam->strength)*self::HOME_FACTOR;
         $totalStrength = $homeTeam->strength + $awayTeam->strength + (($homeTeam->strength + $awayTeam->strength)*self::DRAW_FACTOR);
         $randomInt = random_int(0, $totalStrength);
 
