@@ -11,7 +11,7 @@ class TeamController extends Controller
 {
     public function teams(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $teams = Team::all()->take(4);
+        $teams = Team::all();
 
         return TeamResource::collection($teams);
     }

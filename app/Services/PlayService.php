@@ -4,15 +4,21 @@ namespace App\Services;
 
 use App\Actions\UpdateFixture;
 use App\Models\Fixture;
+use App\Models\League;
 use App\Models\Team;
 
 abstract class PlayService
 {
     const MAX_GOAL = 8;
     const DRAW_FACTOR = 0.2;
+    const MAX_WEEK = 6;
 
-    public abstract function findFixtures();
     public abstract function play();
+
+    public function findFixtures(League $league)
+    {
+        return Fixture::query()->ofLeague($league->id)->ofWeek($league->at_week+1)->playedStatus(false)->get();
+    }
 
     public function playMatch(Fixture $fixture)
     {

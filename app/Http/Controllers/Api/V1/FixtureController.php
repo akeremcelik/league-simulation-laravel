@@ -16,7 +16,7 @@ class FixtureController extends Controller
     public function generateFixtures()
     {
         $league = (new StoreLeague())->handle();
-        $teams = Team::all()->take(4);
+        $teams = Team::all();
 
         foreach ($teams as $team) {
             $league->teams()->attach($team);
