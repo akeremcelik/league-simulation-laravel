@@ -18,6 +18,7 @@ class League extends Model
     {
         return $this->belongsToMany(Team::class)
             ->using(LeagueTeam::class)
-            ->withPivot('won', 'drawn', 'lost', 'goals_for', 'goals_against');
+            ->withPivot('won', 'drawn', 'lost', 'goals_for', 'goals_against')
+            ->withTimestamps();
     }
 }
